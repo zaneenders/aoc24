@@ -17,6 +17,7 @@ let package = Package(
             url: "https://github.com/apple/swift-nio.git",
             from: "2.76.1"
         ),
+        .package(url: "https://github.com/apple/swift-algorithms", from: "1.2.0"),
     ],
     targets: [
         .target(
@@ -24,6 +25,7 @@ let package = Package(
             dependencies: [
                 .product(name: "_NIOFileSystem", package: "swift-nio"),
                 .product(name: "SystemPackage", package: "swift-system"),
+                .product(name: "Algorithms", package: "swift-algorithms"),
             ]),
         .testTarget(
             name: "aoc24Tests",
