@@ -85,3 +85,76 @@ func explore(x: Int, y: Int, _ data: borrowing [[Character]], _ word: String) ->
     }
     return found
 }
+struct Pair: Hashable {
+    let x: Int
+    let y: Int
+    init(_ x: Int, _ y: Int) {
+        self.x = x
+        self.y = y
+    }
+}
+func day4Part2(_ input: String) -> Int {
+    let lines = input.split(separator: "\n")
+    var data: [[Character]] = []
+    for line in lines {
+        let row: [Character] = Array(line)
+        data.append(row)
+    }
+    var found: Int = 0
+    y_loop: for (y, row) in data.enumerated() {
+        x_loop: for (x, _) in row.enumerated() {
+            guard y > 0 && y < data.count - 1 else {
+                continue y_loop
+            }
+            guard x > 0 && x < data[0].count - 1 else {
+                continue x_loop
+            }
+            found += find(x: x, y: y, data)
+        }
+    }
+    return found
+}
+
+func find(x: Int, y: Int, _ data: borrowing [[Character]]) -> Int {
+    /*
+    S.M
+    .A.
+    S.M
+    */
+    if data[y][x] == "A" && data[y - 1][x - 1] == "S" && data[y - 1][x + 1] == "M" && data[y + 1][x - 1] == "S"
+        && data[y + 1][x + 1] == "M"
+    {
+        return 1
+    }
+    /*
+    M.S
+    .A.
+    M.S
+    */
+    if data[y][x] == "A" && data[y - 1][x - 1] == "M" && data[y - 1][x + 1] == "S" && data[y + 1][x - 1] == "M"
+        && data[y + 1][x + 1] == "S"
+    {
+        return 1
+    }
+    /*
+    S.S
+    .A.
+    M.M
+    */
+    if data[y][x] == "A" && data[y - 1][x - 1] == "S" && data[y - 1][x + 1] == "S" && data[y + 1][x - 1] == "M"
+        && data[y + 1][x + 1] == "M"
+    {
+        return 1
+    }
+    /*
+    M.M
+    .A.
+    S.S
+    */
+    if data[y][x] == "A" && data[y - 1][x - 1] == "M" && data[y - 1][x + 1] == "M" && data[y + 1][x - 1] == "S"
+        && data[y + 1][x + 1] == "S"
+    {
+        return 1
+    }
+    return 0
+}
